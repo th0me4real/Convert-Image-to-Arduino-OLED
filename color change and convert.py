@@ -1,13 +1,16 @@
-from PIL import Image
+from PIL import Image, ImageOps
 import numpy as np
+# 載入圖片
+img = Image.open('未命名.jpg')
 
-# 載入圖片並轉換為黑白
-img = Image.open('1122.jpg').convert('1') #仔入位置請自行置換
+# 反轉圖片顏色
+inverted_image = ImageOps.invert(img.convert('RGB'))
 
-img = img.resize((128, 64)) # 縮放圖片至128x64 可依OLED尺寸調整
+# 將反轉後的圖片轉換為黑白並縮放至128x64
+inverted_image_bw = inverted_image.convert('1').resize((128, 64))
 
 # 轉換圖片為numpy array
-img_array = np.array(img)
+img_array = np.array(inverted_image_bw)
 
 # 生成二進制序列
 bitmap = []
